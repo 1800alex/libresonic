@@ -1,12 +1,12 @@
 [package]
 name = "libresonic"
-version = "0.1.0"
+version.workspace = true
 edition = "2024"
 rust-version = "1.98"
 license = "MIT"
 description = "Reusable music domain, OpenSubsonic and local playback foundations for Sonicfast"
 repository = "https://github.com/1800alex/libresonic"
-publish = true
+publish.workspace = true
 
 [workspace]
 members = ["crates/libresonic-core", "crates/libresonic-opensubsonic", "crates/libresonic-playback"]
@@ -17,17 +17,23 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.98"
 license = "MIT"
-publish = false
+publish = true
 repository = "https://github.com/1800alex/libresonic"
+
+[workspace.dependencies]
+# Paths are used locally; the matching versions are used in published crates.
+libresonic-core = { version = "0.1.0", path = "crates/libresonic-core" }
+libresonic-opensubsonic = { version = "0.1.0", path = "crates/libresonic-opensubsonic" }
+libresonic-playback = { version = "0.1.0", path = "crates/libresonic-playback" }
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
 missing_docs = "deny"
 
 [dependencies]
-libresonic-core = { path = "crates/libresonic-core" }
-libresonic-opensubsonic = { path = "crates/libresonic-opensubsonic" }
-libresonic-playback = { path = "crates/libresonic-playback" }
+libresonic-core.workspace = true
+libresonic-opensubsonic.workspace = true
+libresonic-playback.workspace = true
 
 [dev-dependencies]
 # Runtime for the standalone connection/browse example and opt-in live tests.

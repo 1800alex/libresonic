@@ -2,11 +2,11 @@
 
 Reusable music models and an async OpenSubsonic service for
 [Sonicfast](https://github.com/1800alex/sonicfast). Connection/browsing and bounded single-track MP3/FLAC/M4A
-playback are implemented. The crates remain unpublished and their API may change.
+playback are implemented. The API is pre-1.0 and may change.
 
 This repository builds independently. Sonicfast consumes a pinned Git revision,
-so neither repository requires a particular checkout directory. The crates are
-not published to crates.io yet. Application integration decisions are recorded
+so neither repository requires a particular checkout directory. The release
+workflow publishes all four workspace crates together. Application integration decisions are recorded
 in the [Sonicfast design documents](https://github.com/1800alex/sonicfast/tree/main/docs/design).
 
 The root facade reexports `libresonic-core` (server/kind-scoped IDs, neutral
@@ -123,7 +123,32 @@ cargo clippy --locked --workspace --all-targets -- -D warnings
 cargo test --locked --workspace --all-targets
 cargo test --locked --workspace --doc
 RUSTDOCFLAGS='-D warnings' cargo doc --locked --workspace --no-deps
+cargo publish --workspace --locked --dry-run --registry crates-io
 ```
+
+## Releasing
+
+All four crates inherit `workspace.package.version` and publishing settings from
+the root manifest. Internal dependencies are defined once in
+`workspace.dependencies`, with both a local path and a crates.io version
+requirement. Cargo uses the paths during development and the versions when
+packaging for publication.
+
+Before releasing, update the shared version and keep the three internal version
+requirements compatible with it. Commit the changes and tag that commit
+`v<version>`. The release workflow checks that the tag matches the manifest,
+performs a workspace publish dry-run, then runs
+`cargo publish --workspace --locked --registry crates-io` using the repository's
+`CARGO_REGISTRY_TOKEN` secret. Cargo handles publishing dependencies before their
+dependents and waits for registry availability. A plain `cargo publish` at the
+workspace root selects only the facade crate.
+
+The CI dry-run checks all four packaged crates without uploading them. When
+checking uncommitted local changes, add `--allow-dirty` to the dry-run command.
+The release workflow always publishes from a clean tagged checkout. Cargo 1.90
+or newer supports workspace publishing; the declared Rust minimum is 1.98.
+
+## Validation coverage
 
 To explicitly choose another installed toolchain or Cargo cache, use
 `CARGO_HOME="$PWD/.cache/cargo" cargo +stable ...`. Current

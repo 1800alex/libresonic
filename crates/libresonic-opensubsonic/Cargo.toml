@@ -9,7 +9,7 @@ repository.workspace = true
 description = "Bounded OpenSubsonic adapter producing neutral music models"
 
 [dependencies]
-libresonic-core = { path = "../libresonic-core" }
+libresonic-core.workspace = true
 # Match Sonicfast's transport/TLS family. opensubsonic 0.6.1 cannot cap reads and
 # unconditionally enables reqwest 0.13's second crypto provider; see ADR 002.
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls-native-roots"] }

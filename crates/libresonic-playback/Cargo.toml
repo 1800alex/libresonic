@@ -11,7 +11,7 @@ description = "Bounded MP3, FLAC and M4A single-track decoding and neutral PCM t
 [dependencies]
 serde = { version = "1", features = ["derive"] }
 rand = "0.9"
-libresonic-core = { path = "../libresonic-core" }
+libresonic-core.workspace = true
 # Same decoder already used by Sonicfast; no audio device or GUI dependencies.
 symphonia = { version = "0.5", default-features = false, features = ["mp3", "flac", "aac", "alac", "isomp4"] }
 tokio = { version = "1", features = ["rt", "sync", "time", "macros"] }

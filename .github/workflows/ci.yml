@@ -21,6 +21,8 @@ jobs:
       - run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - run: cargo test --locked --workspace --all-targets
       - run: cargo test --locked --workspace --doc
+      - name: Verify crate packaging
+        run: cargo publish --workspace --locked --dry-run --registry crates-io
       - run: cargo doc --locked --workspace --no-deps
         env:
           RUSTDOCFLAGS: -D warnings
