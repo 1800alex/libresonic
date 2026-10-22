@@ -6,7 +6,7 @@ rust-version = "1.98"
 license = "MIT"
 description = "Reusable music domain, OpenSubsonic and local playback foundations for Sonicfast"
 repository = "https://github.com/1800alex/libresonic"
-publish = false
+publish = true
 
 [workspace]
 members = ["crates/libresonic-core", "crates/libresonic-opensubsonic", "crates/libresonic-playback"]
