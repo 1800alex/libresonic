@@ -1,0 +1,38 @@
+[package]
+name = "libresonic"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.98"
+license = "MIT"
+description = "Reusable music domain, OpenSubsonic and local playback foundations for Sonicfast"
+repository = "https://github.com/1800alex/libresonic"
+publish = false
+
+[workspace]
+members = ["crates/libresonic-core", "crates/libresonic-opensubsonic", "crates/libresonic-playback"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.98"
+license = "MIT"
+publish = false
+repository = "https://github.com/1800alex/libresonic"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "deny"
+
+[dependencies]
+libresonic-core = { path = "crates/libresonic-core" }
+libresonic-opensubsonic = { path = "crates/libresonic-opensubsonic" }
+libresonic-playback = { path = "crates/libresonic-playback" }
+
+[dev-dependencies]
+# Runtime for the standalone connection/browse example and opt-in live tests.
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "deny"

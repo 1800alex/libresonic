@@ -1,0 +1,32 @@
+[package]
+name = "libresonic-opensubsonic"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+repository.workspace = true
+description = "Bounded OpenSubsonic adapter producing neutral music models"
+
+[dependencies]
+libresonic-core = { path = "../libresonic-core" }
+# Match Sonicfast's transport/TLS family. opensubsonic 0.6.1 cannot cap reads and
+# unconditionally enables reqwest 0.13's second crypto provider; see ADR 002.
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls-native-roots"] }
+# Subsonic's specified salt-token authentication (not password storage).
+md-5 = "0.10"
+rand = "0.9"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+url = "2"
+# Bounded retained HTTP chunks and per-read audio deadlines.
+bytes = "1"
+tokio = { version = "1", features = ["time"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "io-util", "time", "sync"] }
+# Exercise real HTTP behavior without a live music server.
+wiremock = "0.6.5"
+
+[lints]
+workspace = true

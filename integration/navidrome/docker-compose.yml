@@ -1,0 +1,21 @@
+services:
+  navidrome:
+    # Pinned Navidrome 0.64.0 fixture; update deliberately with compatibility evidence.
+    image: deluan/navidrome@sha256:a384948b81bd1529986c5960169e7fc4fa00f46bde6bd517971a4c36671db2af
+    ports:
+      - "127.0.0.1:${NAVIDROME_PORT:-4535}:4533"
+    environment:
+      ND_MUSICFOLDER: /music
+      ND_DATAFOLDER: /data
+      # Disposable fixture credentials, never a personal account.
+      ND_DEVAUTOCREATEADMINPASSWORD: admin
+      ND_SCANSCHEDULE: "0"
+      ND_ENABLEINSIGHTSCOLLECTOR: "false"
+      ND_ENABLEEXTERNALSERVICES: "false"
+      ND_LOGLEVEL: info
+    volumes:
+      - ./.library:/music:ro
+      - navidrome-data:/data
+
+volumes:
+  navidrome-data:

@@ -1,0 +1,5 @@
+/target/
+/.cache/
+**/__pycache__/
+/integration/navidrome/.library/
+/integration/navidrome/.library-*/

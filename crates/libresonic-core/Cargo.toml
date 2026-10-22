@@ -1,0 +1,19 @@
+[package]
+name = "libresonic-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+repository.workspace = true
+description = "Server-scoped music models and async service boundary"
+
+[dependencies]
+# Neutral models can be persisted without importing protocol DTOs.
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1"
+
+[lints]
+workspace = true
